@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <main id="accueil">
+        <section class="presentation">
+            <h1> Présentation </h1>
+            <p>Bienvenue sur notre site communautaire pour étudiants rochelais !</p>
+            <p>Vous pouvez y échanger des annonces en tout genre, ou discuter librement via notre forum.
+            Ce site a pour vocation d'être une plateforme d'entraide pour vous autres étudiants, durant cette période pour le moins particulière de crise sanitaire.</p>
+            <p>Ne vous privez pas ! :)</p>
+        </section>
+        <section class="apercus">
+            <!-- REVOIR LES TABLES, METTRE DATE OU AUTRES ??? -->
+
+            <table class="test_annonce">
+                <thead>
+                <tr>
+                    <!-- Revoir le titre -->
+                    <th colspan="1">Les dernières annonces</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for a in annonce %}
+                    <tr>
+                        <td class="tab_titre">{{ a.nom }}</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_content">{{ a.description }}</td>
+                    </tr>
+                    <tr>
+                        <td class="tab_date">Le {{ a.date|date('d-m-Y') }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+            <table class="test_forum">
+                <thead>
+                <tr>
+                    <!-- Revoir le titre -->
+                    <th colspan="1">Les derniers post forum</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for f in forum %}
+                    <tr>
+                        <td class="tab_titre">{{ f.sujet }}</td>
+                    </tr>
+                    <tr>
+                        {% set taille = f.messages|length %}
+                        {%  if taille > 0  %}
+                        <td class="tab_content">{{ f.messages[0].text }}</td>
+                            {% else %}
+                                <td class="tab_content">Pas de messages</td>
+                        {% endif %}
+                    </tr>
+                    <tr>
+                        <td class="lien_accueil"><a href="{{ path('message', {'id' : f.id}) }}">Voir les messages</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </section>
+        <p class="topic_separation"></p>
+    </main>
+
+{% endblock %}

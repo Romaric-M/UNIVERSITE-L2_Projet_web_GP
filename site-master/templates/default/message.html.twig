@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+    <main id="Message">
+
+        <section class="liste_Topics">
+            <table>
+                <thead>
+                <tr>
+                    <th>{{ forum.sujet }}</th>
+                </tr>
+                </thead>
+                {% for m in messages %}
+                    <tr class="topic">
+                        <td class="left">{{ m.text }}</td>
+                    </tr>
+                    <tr class="topic">
+                        <td class="right">Auteur du message : {{ m.user }}</td>
+                    </tr>
+                    <tr>
+                        <!--<td class="lien_messages">Répondre à {{ m.user }}</td>-->
+                    </tr>
+                    <tr class="topic_separation"></tr>
+                {% endfor %}
+            </table>
+        </section>
+        {% if is_granted('ROLE_USER') %}
+        <section class="formulaire">
+            {{ form_start(form) }}
+            {{ form_widget(form) }}
+            <input type="submit" value="Poster">
+            {{ form_end(form) }}
+            <p class="topic_separation"></p>
+        </section>
+        {% endif %}
+    </main>
+{% endblock %}
+
+

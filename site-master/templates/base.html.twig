@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}Projet web groupe 10{% endblock %}</title>
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+
+            {#{{ encore_entry_link_tags('app') }}#}
+        {% endblock %}
+
+        {% block javascripts %}
+            {#{{ encore_entry_script_tags('app') }}#}
+        {% endblock %}
+    </head>
+    <body>
+        <header id="menu">
+            {% if is_granted('ROLE_USER') %}
+
+            <nav class="menu_user">
+                <ul>
+                    <li><a href="{{ path('profil') }}">Mon profil</a></li>
+
+                    <li id="logout"><a href="{{ path("app_logout") }}">Déconnexion</a></li>
+                </ul>
+            </nav>
+            {% else %}
+            <!-- Si n'est pas connecté affiche ce petit menu -->
+            <nav class="menu_user">
+                <ul>
+                    <li><a href="{{ path("app_login") }}">Se connecter</a></li>
+                    <li><a href="{{ path("signin") }}">Créer un compte</a></li>
+                </ul>
+            </nav>
+            {% endif %}
+
+            <h1 id="nom_page">PROJET GROUPE 10</h1>
+
+            <nav id="sous_menu">
+                <ul>
+                    <li class="smenu"><a href="/">Accueil</a></li>
+                    <li class="smenu"><a href="{{ path("annonce") }}">Annonces</a></li>
+                    <li class="smenu"><a href="{{ path("forum") }}">Forum</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        {% block body %}{% endblock %}
+        <footer>
+            {% if is_granted('ROLE_ADMIN') %}
+                <p><a href="{{ path("admin") }}">Gestion administrateur</a></p>
+            {% endif %}
+            <p>Licence 2 Informatique | Gestion de Projet | Groupe 10</p>
+        </footer>
+    </body>
+</html>

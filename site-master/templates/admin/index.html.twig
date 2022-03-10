@@ -1,0 +1,18 @@
+{% extends 'base.html.twig' %}
+
+
+{% block title %}Hello AdminController!{% endblock %}
+{% block body %}
+    <main id="accueil_admin">
+        <!--
+        A FAIRE, ALLER ALLER
+        IL FAUT FAIRE DES LIENS AUSSI POUR LES AUTRES PAGES ADMIN
+        -->
+        <section class="presentation">
+            <h1>Bienvenue sur l'espace administrateur, {{ admin.username }}! ✅</h1>
+            <p>&#10153;<a href="{{ path("admin-annonce") }}">Administration des annonces</a></p>
+            <p>&#10153;<a href="{{ path("admin-forum") }}">Administration du forum</a></p>
+            <p>&#10153;<a href="{{ path("admin-user") }}">Administration des utilisateurs</a></p>
+        </section>
+    </main>
+{% endblock %}

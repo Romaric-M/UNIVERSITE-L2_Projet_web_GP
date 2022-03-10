@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <main id="annonce">
+        <section class="liste_Topics">
+            <table>
+                <thead>
+                <tr>
+                    <th colspan="2">Annonces postées</th>
+                </tr>
+                </thead>
+                {% for a in annonce %}
+                    <tr class="topic">
+                        <td class="left">{{ a.nom }}</td>
+                        <td class="right">Auteur de l'annonce : {{ a.user }}</td>
+                    </tr>
+                    <tr class="description">
+                        <td class="left">{{ a.description }}</td>
+                        {% if is_granted('ROLE_USER') %}
+                            {% if a in app.user.annonces %}
+                                <td class="right_self">&#9888; Cette annonce est de vous &#9888;</td>
+                            {% elseif a in app.user.reply %}
+                                <td class="right">Annonce acceptée &#10004;</td>
+                            {% else %}
+                                <td class="right"><a href="{{ path("annonce-user",{"id" : a.id}) }}">Accepter cette annonce</a></td>
+                            {% endif %}
+                        {% endif %}
+                    </tr>
+                    <tr class="date">
+                        <td class="left">Postée le {{ a.date|date('d-m-Y') }} à {{ a.date|date('H:i') }}</td>
+                    </tr>
+                    <tr class="topic_separation"></tr>
+                {% endfor %}
+            </table>
+        </section>
+        <section class="formulaire">
+        {% if is_granted('ROLE_USER') %}
+            <h2>&#8595; &#8595; &#8595; &#8595; Ajoutez une annonce ! &#8595; &#8595; &#8595; &#8595;</h2>
+            {{ form_start(form) }}
+                {{ form_widget(form) }}
+                <input type="submit" value="Poster">
+                {{ form_end(form) }}
+        {% endif %}
+            <p class="topic_separation"></p>
+        </section>
+    </main>
+{% endblock %}
+

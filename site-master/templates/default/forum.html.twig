@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
+    <main id="Forum">
+        <section class="liste_Topics">
+            <!--
+                FAIRE LIEN POUR CHAQUE POST QUI AMENE SUR LA DISCUSSION
+                DE CE POST AVEC L'ID OU JE NE SAIS QUOI
+                C DOIT DEJA ETRE FAIT DANS LE CONTROLLER FAUT CHECK ROUTE
+            -->
+            <table>
+                <thead>
+                <tr>
+                    <th colspan="2">Sujets de discussions</th>
+                </tr>
+                </thead>
+                {% for f in forum %}
+                    <tr class="topic">
+                        <td class="left">{{ f.sujet }}</td>
+                        <td class="right">Auteur du sujet : {{ f.user }}</td>
+                    </tr>
+                    <tr>
+                        <td class="lien_messages"><a href="{{ path('message', {'id' : f.id}) }}">Voir les messages</a></td>
+                    </tr>
+                    <tr class="topic_separation"></tr>
+                {% endfor %}
+            </table>
+        </section>
+        <section class="formulaire">
+            {% if is_granted('ROLE_USER') %}
+                <h2>&#8595; &#8595; &#8595; &#8595; Ajoutez un sujet ! &#8595; &#8595; &#8595; &#8595;</h2>
+                {{ form_start(form) }}
+                <p>Nom de votre sujet</p>
+                {{ form_widget(form.sujet) }}
+                {{ form_widget(form.message.text) }}
+                <input type="submit" value="Poster">
+                {{ form_end(form) }}
+        {% endif %}
+            <p class="topic_separation"></p>
+        </section>
+    </main>
+{% endblock %}
+

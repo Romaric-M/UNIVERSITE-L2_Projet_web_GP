@@ -1,0 +1,52 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {% if is_granted('ROLE_USER') %}
+    <main id="Profil">
+        <section class="info_compte">
+                <h3>Votre nom d'utilisateur: {{ user.username }}</h3>
+                <h3>Votre adresse e-mail: {{ user.email }}</h3>
+            {% if is_granted('ROLE_ADMIN') %}
+                <h3>Vous etes Administrateur, bravo !!</h3>
+            {% endif %}
+        </section>
+        <section class="profil">
+            <article class="profil_forum">
+                <table>
+                    <thead>
+                    <tr>
+                        <th colspan="2">Vos sujets de forum</th>
+                    </tr>
+                    </thead>
+                {% for f in user.forums %}
+                <tr>
+                    <td>{{ f.sujet }}</td>
+                    <td class="right"><a href="{{ path('message', {'id' : f.id}) }}">Accèder à la discussion</a></td>
+                </tr>
+                {% endfor %}
+                </table>
+            </article>
+            <article class="profil_annonce">
+                <table>
+                    <thead>
+                        <tr>
+                            <th colspan="2">Vos annonces</th>
+                        </tr>
+                    </thead>
+                {% for a in user.annonces %}
+                    <tr>
+                        <td>{{ a.nom }}</td>
+                        {% if a.reply %}
+                            <td class="right">{{ a.reply }}</td>
+                        {% else %}
+                            <td class="right">Aucune réponse</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+                </table>
+            </article>
+        </section>
+        <p class="topic_separation"></p>
+    </main>
+    {% endif %}
+{% endblock %}

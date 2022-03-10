@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello AdminController!{% endblock %}
+
+{% block body %}
+    <main id="Donnees">
+        <div class="titre_donnee">
+            {% if route == "forum" %}
+                <h1>Liste des sujets de discussions</h1>
+            {% elseif route == "annonce" %}
+                <h1>Liste des annonces</h1>
+            {% else %}
+                <h1>Liste des utilisateurs inscrits</h1>
+            {% endif %}
+        </div>
+        <section class="liste_Donnees">
+            <div class="ajouter">
+                <a href="{{ path("add",{'route': route })}}">Ajouter un élément</a>
+            </div>
+            <table>
+                <thead>
+                <tr>
+                    {% for keys in tab[1].getTab|keys %}
+                        <th>{{ keys }}</th>
+                    {% endfor %}
+                </tr>
+                <tr class="donnees_separation"></tr>
+                </thead>
+                {% for donnee in tab %}
+                    <tr>
+                        {% for d in donnee.getTab %}
+                            <td>{{ d }}</td>
+                        {% endfor %}
+                        <td class="modifier"><a href="{{ path("edit",{'id': donnee.id, 'route': route })}}">Modifier</a></td>
+                        <td class="supprimer"><a href="{{ path("remove",{'id': donnee.id, 'route': route })}}">Supprimer</a></td>
+                    </tr>
+                    <tr class="donnees_separation"></tr>
+                {% endfor %}
+            </table>
+        </section>
+    </main>
+{% endblock %}
